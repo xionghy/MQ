@@ -1,4 +1,4 @@
-#RabbitMq安装使用说明
+# RabbitMq安装使用说明
 ## 服务器信息
 >CentOS Linux release 7.7.1908 (Core)
 
@@ -49,9 +49,8 @@
     原因：rabbitmq从3.3.0开始禁止使用guest/guest权限通过除localhost外的访问
     
  
- #项目介绍
- 
- ##技术框架
+ # 项目介绍
+ ## 技术框架
  + SpringBoot 1.5.22.RELEASE
  + spring-boot-starter-amqp
  + RabbitMQ
@@ -87,8 +86,7 @@
       </dependencies>
  ``` 
 
-##项目说明
-
+## 项目说明
 Demo中主要实现RabbitMQ以下常用功能，集成SpringBoot开发：
 + 普通队列消息
 + DirectExchange 交换机消息
