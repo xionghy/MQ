@@ -1,0 +1,58 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: test-rabbitmq
+  rabbitmq:
+    host: 39.106.128.44
+    port: 5672
+    username: admin
+    password: admin
+    #自定义创建了一个虚拟host
+    virtual-host: testmq
+
+    #确认消息发送到交换机 开启事务时候不能设置改属性为true
+#    publisher-confirms: true
+    #确认消息发送到队列
+    publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: manual
+        retry:
+          enabled: true
+    template:
+      retry:
+        #最大重试次数
+        max-attempts: 3
+        #最大重试时间
+        max-interval: 10000
+      #exchange到queues失败，则回调return
+      mandatory: true
+
+
+
+
+#系统自定义属性
+mq:
+  directExchange:
+    name: directExchage-test
+    queue:
+      name: direct-queue-test
+      key: TestDirectRoutingKey
+      msgCallback: callback-queue-test
+  fanoutExchange:
+    name: fanoutExchage-test
+    queue:
+      nameA: fanout-queue-test1
+      nameB: fanout-queue-test2
+      nameC: fanout-queue-test3
+  topicExchange:
+    name: topicExchage-test
+    queue:
+      nameA: topic-queue-test1
+      nameB: topic-queue-test2
+      nameC: topic-queue-test3
+  tx:
+    exchange: tx-exchange
+    queue: tx-queue
