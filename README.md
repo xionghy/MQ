@@ -50,6 +50,7 @@
     
  
  #项目介绍
+ 
  ##技术框架
  + SpringBoot 1.5.22.RELEASE
  + spring-boot-starter-amqp
@@ -87,6 +88,7 @@
  ``` 
 
 ##项目说明
+
 Demo中主要实现RabbitMQ以下常用功能，集成SpringBoot开发：
 + 普通队列消息
 + DirectExchange 交换机消息
