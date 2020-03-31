@@ -73,6 +73,25 @@ public class RabbitProducer {
     private RabbitTemplate rabbitTemplateM;
 
 
+    //==============普通队列模式和工作队列模式==============
+    @Test
+    public void commonTest(){
+        String msg = " 普通消息：hello world";
+        rabbitTemplate.convertAndSend("common-queue",msg);
+    }
+
+
+    @Test
+    public void workTest() throws Exception{
+        String msg = " work消息：hello world=";
+        for (int i = 0; i<100; i++) {
+            rabbitTemplate.convertAndSend("work-queue",msg+i);
+        }
+        Thread.sleep(30*1000);
+    }
+
+
+
     /**
      * direct 交换机发送消息
      */
@@ -199,5 +218,39 @@ public class RabbitProducer {
     }
 
 
+    //多线程模仿多个应用系统向队列发送消息
+    @Test
+    public void threadProcess() throws Exception{
 
+        SendMsgThread sendMsgThread = new SendMsgThread(rabbitTemplateT);
+
+        Thread t1 = new Thread(sendMsgThread);
+        Thread t2 = new Thread(sendMsgThread);
+        Thread t3 = new Thread(sendMsgThread);
+        t1.start();
+        t2.start();
+        t3.start();
+
+        //为了线程执行完毕，此处休眠60秒
+        Thread.sleep(60*1000);
+    }
+
+
+
+
+}
+
+class SendMsgThread implements Runnable{
+    RabbitTemplate rabbitTemplate;
+    SendMsgThread(RabbitTemplate rabbitTemplate){
+        this.rabbitTemplate = rabbitTemplate;
+    }
+
+    @Override
+    public void run() {
+        for (int i =0 ; i<100; i++){
+            String msg = Thread.currentThread().getName()+"=====发送消息===="+i;
+            rabbitTemplate.convertAndSend("thread-exchange","thread-queue",msg);
+        }
+    }
 }

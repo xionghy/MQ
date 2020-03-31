@@ -89,10 +89,12 @@
 ## 项目说明
 Demo中主要实现RabbitMQ以下常用功能，集成SpringBoot开发：
 + 普通队列消息
++ Work queues
 + DirectExchange 交换机消息
 + FanoutExchange 交换机消息
 + TopicExchange 交换机消息
 + 消息回调确认
 + 消息延迟发送
 + 消息事务
++ 多线程发送消息并模拟多个系统同时监听一个队列处理情况
 

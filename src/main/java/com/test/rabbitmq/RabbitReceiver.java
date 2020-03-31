@@ -127,4 +127,97 @@ public class RabbitReceiver {
         logger.info("接收事务消息：{}",msg);
     }
 
+
+    /**
+     * 模拟多个系统同时监听同一个队列
+     */
+
+    @RabbitListener(queues = {"thread-queue"} )
+    @RabbitHandler
+    public void receiveTh1(Message message, Channel channel) throws Exception{
+
+            long deliveryTag = message.getMessageProperties().getDeliveryTag();
+            try {
+                //message即接收的消息
+                logger.info("系统一：{}",new String(message.getBody()));
+                channel.basicAck(deliveryTag,true);
+            } catch (Exception e) {
+                logger.error("系统一异常：", e);
+                channel.basicReject(deliveryTag,false);
+            }
+    }
+
+    @RabbitListener(queues = {"thread-queue"} )
+    @RabbitHandler
+    public void receiveTh2(Message message, Channel channel) throws Exception{
+        long deliveryTag = message.getMessageProperties().getDeliveryTag();
+        try {
+            //message即接收的消息
+            logger.info("系统二：{}",new String(message.getBody()));
+            channel.basicAck(deliveryTag,true);
+        } catch (Exception e) {
+            logger.error("系统二异常：", e);
+            channel.basicReject(deliveryTag,false);
+        }
+    }
+
+    @RabbitListener(queues = {"thread-queue"} )
+    @RabbitHandler
+    public void receiveTh3(Message message, Channel channel) throws Exception{
+        long deliveryTag = message.getMessageProperties().getDeliveryTag();
+        try {
+            //message即接收的消息
+            logger.info("系统三：{}",new String(message.getBody()));
+            channel.basicAck(deliveryTag,true);
+        } catch (Exception e) {
+            logger.error("系统三异常：", e);
+            channel.basicReject(deliveryTag,false);
+        }
+    }
+
+
+
+    // 普通模式和工作模式
+    @RabbitListener(queues = {"common-queue"} )
+    @RabbitHandler
+    public void common(Message message, Channel channel) throws Exception{
+        long deliveryTag = message.getMessageProperties().getDeliveryTag();
+        try {
+            //message即接收的消息
+            logger.info("接收普通消息：{}",new String(message.getBody()));
+            channel.basicAck(deliveryTag,true);
+        } catch (Exception e) {
+            logger.error("接收普通消息异常：", e);
+            channel.basicReject(deliveryTag,false);
+        }
+    }
+
+    @RabbitListener(queues = {"work-queue"} )
+    @RabbitHandler
+    public void work1(Message message, Channel channel) throws Exception{
+        long deliveryTag = message.getMessageProperties().getDeliveryTag();
+        try {
+            //message即接收的消息
+            logger.info("work1消息：{}",new String(message.getBody()));
+            channel.basicAck(deliveryTag,true);
+        } catch (Exception e) {
+            logger.error("work1消息异常：", e);
+            channel.basicReject(deliveryTag,false);
+        }
+    }
+
+    @RabbitListener(queues = {"work-queue"} )
+    @RabbitHandler
+    public void work2(Message message, Channel channel) throws Exception{
+        long deliveryTag = message.getMessageProperties().getDeliveryTag();
+        try {
+            //message即接收的消息
+            logger.info("work2消息：{}",new String(message.getBody()));
+            channel.basicAck(deliveryTag,true);
+        } catch (Exception e) {
+            logger.error("work2消息异常：", e);
+            channel.basicReject(deliveryTag,false);
+        }
+    }
+
 }

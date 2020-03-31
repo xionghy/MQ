@@ -371,4 +371,33 @@ public class RabbitMQConfig {
     }
 
 
+    //===========多系统同时发送和接收消息===========
+    @Bean
+    public DirectExchange threadExchange() {
+        return new DirectExchange("thread-exchange",true,false);
+    }
+
+    @Bean
+    public Queue threadQueue() {
+        return new Queue("thread-queue",true);
+    }
+
+    @Bean
+    public Binding threadBinding() {
+        return BindingBuilder.bind(threadQueue()).to(threadExchange()).withQueueName();
+    }
+
+
+    //==============补充 普通队列模式和工作队列模式==============
+
+    @Bean
+    public Queue commonQueue() {
+        return new Queue("common-queue",true);
+    }
+
+    @Bean
+    public Queue workQueue1() {
+        return new Queue("work-queue",true);
+    }
+
 }
