@@ -48,5 +48,51 @@
     改为：{loopback_users, []}，然后重启服务
     原因：rabbitmq从3.3.0开始禁止使用guest/guest权限通过除localhost外的访问
     
+ 
+ #项目介绍
+ ##技术框架
+ + SpringBoot 1.5.22.RELEASE
+ + spring-boot-starter-amqp
+ + RabbitMQ
+ + yaml配置文件
+ + maven支持
+ + jdk 1.8
+ 
+ ```  
+      <parent>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-parent</artifactId>
+          <version>1.5.22.RELEASE</version>
+      </parent>
+      <dependencies>
+          <dependency>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-starter</artifactId>
+          </dependency>
+          <dependency>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-starter-amqp</artifactId>
+          </dependency>
+  
+          <dependency>
+              <groupId>junit</groupId>
+              <artifactId>junit</artifactId>
+              <version>4.12</version>
+          </dependency>
+          <dependency>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-starter-test</artifactId>
+          </dependency>
+      </dependencies>
+ ``` 
 
+##项目说明
+Demo中主要实现RabbitMQ以下常用功能，集成SpringBoot开发：
++ 普通队列消息
++ DirectExchange 交换机消息
++ FanoutExchange 交换机消息
++ TopicExchange 交换机消息
++ 消息回调确认
++ 消息延迟发送
++ 消息事务
 
